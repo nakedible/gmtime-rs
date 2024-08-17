@@ -321,7 +321,7 @@ pub mod consts {
 #[inline]
 pub const fn rd_to_date(n: i32) -> (i32, u8, u8) {
     debug_assert!(n >= RD_MIN && n <= RD_MAX, "given rata die is out of range");
-    let n = n.wrapping_add(DAY_OFFSET) as u32;
+    let n = (n + DAY_OFFSET) as u32;
     // century
     let n = 4 * n + 3;
     let c = n / 146097;
@@ -338,7 +338,7 @@ pub const fn rd_to_date(n: i32) -> (i32, u8, u8) {
     let m = n / 2u32.pow(16);
     let d = n % 2u32.pow(16) / 2141;
     // map
-    let y = (y as i32).wrapping_sub(YEAR_OFFSET);
+    let y = (y as i32) - YEAR_OFFSET;
     let m = if j { m - 12 } else { m };
     let d = d + 1;
     (y, m as u8, d as u8)
@@ -350,7 +350,7 @@ const fn date_to_internal(y: i32, m: u8, d: u8) -> (u32, u32, u32, u32) {
     debug_assert!(y >= YEAR_MIN && y <= YEAR_MAX, "given year is out of range");
     debug_assert!(m >= consts::MONTH_MIN && m <= consts::MONTH_MAX, "given month is out of range");
     debug_assert!(d >= consts::DAY_MIN && d <= days_in_month(y, m), "given day is out of range");
-    let y = y.wrapping_add(YEAR_OFFSET) as u32;
+    let y = (y + YEAR_OFFSET) as u32;
     let jf = (m < 3) as u32;
     // year
     let y = y - jf;
@@ -406,7 +406,7 @@ pub const fn date_to_rd((y, m, d): (i32, u8, u8)) -> i32 {
     let m = (979 * m - 2919) / 32;
     // result
     let n = y + m + d;
-    (n as i32).wrapping_sub(DAY_OFFSET)
+    (n as i32) - DAY_OFFSET
 }
 
 /// Convert Rata Die to day of week
@@ -477,7 +477,7 @@ pub const fn date_to_rd((y, m, d): (i32, u8, u8)) -> i32 {
 pub const fn rd_to_weekday(n: i32) -> u8 {
     debug_assert!(n >= RD_MIN && n <= RD_MAX, "given rata die is out of range");
     const P64_OVER_SEVEN: u64 = ((1 << 63) / 7) << 1; // = (1 << 64) / 7
-    (((n.wrapping_sub(RD_MIN) as u64 + 1).wrapping_mul(P64_OVER_SEVEN)) >> 61) as u8
+    ((((n - RD_MIN) as u64 + 1).wrapping_mul(P64_OVER_SEVEN)) >> 61) as u8
 }
 
 /// Convert Gregorian date to day of week
@@ -665,7 +665,7 @@ pub const fn secs_to_dhms(secs: i64) -> (i32, u8, u8, u8) {
     //
     // `SECS_IN_DAY` obviously fits within these bounds
     let secs = if secs > RD_SECONDS_MAX { 0 } else { secs }; // allows compiler to optimize more
-    let secs = secs.wrapping_add(SECS_OFFSET) as u64;
+    let secs = (secs + SECS_OFFSET) as u64;
     let days = (secs / SECS_IN_DAY as u64) as u32;
     let secs = secs % SECS_IN_DAY as u64; // secs in [0, SECS_IN_DAY[ => secs in [0, 97612919[
 
@@ -677,7 +677,7 @@ pub const fn secs_to_dhms(secs: i64) -> (i32, u8, u8, u8) {
     let hh = prd >> 32; // mins / 60
     let mm = (prd as u32) / 71582789; // mins % 60
 
-    let days = (days as i32).wrapping_sub(DAY_OFFSET);
+    let days = (days as i32) - DAY_OFFSET;
     (days, hh as u8, mm as u8, ss as u8)
 }
 
