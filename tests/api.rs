@@ -19,6 +19,8 @@ fn test_date_to_rd() {
     assert_eq!(date_to_rd((i16::MAX as i32, 12, 31)), 11248737);
     assert_eq!(date_to_rd((i16::MIN as i32 - 1, 1, 1)), -12688159);
     assert_eq!(date_to_rd((i16::MAX as i32 + 1, 12, 31)), 11249103);
+    assert_eq!(date_to_rd((YEAR_MIN, 1, 1)), RD_MIN);
+    assert_eq!(date_to_rd((YEAR_MAX, 12, 31)), RD_MAX);
 }
 
 #[test]
@@ -29,6 +31,8 @@ fn test_rd_to_date() {
     assert_eq!(rd_to_date(11248737), (i16::MAX as i32, 12, 31));
     assert_eq!(rd_to_date(-12687795), (i16::MIN as i32 - 1, 12, 31));
     assert_eq!(rd_to_date(11248738), (i16::MAX as i32 + 1, 1, 1));
+    assert_eq!(rd_to_date(RD_MIN), (YEAR_MIN, 1, 1));
+    assert_eq!(rd_to_date(RD_MAX), (YEAR_MAX, 12, 31));
 }
 
 #[test]
@@ -72,6 +76,8 @@ fn test_date_to_weekday() {
     assert_eq!(date_to_weekday((-4, 1, 1)), 1);
     assert_eq!(date_to_weekday((-100, 1, 1)), 1);
     assert_eq!(date_to_weekday((-400, 1, 1)), 6);
+    assert_eq!(date_to_weekday((YEAR_MIN, 1, 1)), 1);
+    assert_eq!(date_to_weekday((YEAR_MAX, 12, 31)), 4);
 }
 
 #[test]
@@ -87,6 +93,8 @@ fn test_next_date() {
     assert_eq!(next_date((2020, 2, 29)), (2020, 3, 1));
     assert_eq!(next_date((-2020, 2, 28)), (-2020, 2, 29));
     assert_eq!(next_date((-2020, 2, 29)), (-2020, 3, 1));
+    assert_eq!(next_date((YEAR_MAX, 12, 30)), (YEAR_MAX, 12, 31));
+    assert_eq!(next_date((YEAR_MIN, 1, 1)), (YEAR_MIN, 1, 2));
 }
 
 #[test]
@@ -102,6 +110,8 @@ fn test_prev_date() {
     assert_eq!(prev_date((2020, 3, 1)), (2020, 2, 29));
     assert_eq!(prev_date((-2020, 2, 29)), (-2020, 2, 28));
     assert_eq!(prev_date((-2020, 3, 1)), (-2020, 2, 29));
+    assert_eq!(prev_date((YEAR_MAX, 12, 31)), (YEAR_MAX, 12, 30));
+    assert_eq!(prev_date((YEAR_MIN, 1, 2)), (YEAR_MIN, 1, 1));
 }
 
 #[test]
@@ -139,6 +149,8 @@ fn test_is_leap_year() {
     assert_eq!(is_leap_year(-4), true);
     assert_eq!(is_leap_year(-100), false);
     assert_eq!(is_leap_year(-400), true);
+    assert_eq!(is_leap_year(YEAR_MIN), false);
+    assert_eq!(is_leap_year(YEAR_MAX), true);
 }
 
 #[test]
@@ -191,6 +203,10 @@ fn test_days_in_month() {
     assert_eq!(days_in_month(-4, 10), 31);
     assert_eq!(days_in_month(-4, 11), 30);
     assert_eq!(days_in_month(-4, 12), 31);
+    assert_eq!(days_in_month(YEAR_MAX, 12), 31);
+    assert_eq!(days_in_month(YEAR_MAX, 2), 29);
+    assert_eq!(days_in_month(YEAR_MIN, 1), 31);
+    assert_eq!(days_in_month(YEAR_MIN, 2), 28);
 }
 
 #[test]
@@ -221,6 +237,8 @@ fn test_rd_to_isoweekdate() {
     assert_eq!(rd_to_isoweekdate(date_to_rd((1981, 12, 31))), (1981, 53, 4));
     assert_eq!(rd_to_isoweekdate(date_to_rd((1982, 1, 1))), (1981, 53, 5));
     assert_eq!(rd_to_isoweekdate(date_to_rd((1982, 1, 2))), (1981, 53, 6));
+    assert_eq!(rd_to_isoweekdate(date_to_rd((YEAR_MAX, 12, 31))), (YEAR_MAX, 53, 4));
+    assert_eq!(rd_to_isoweekdate(date_to_rd((YEAR_MIN, 1, 1))), (YEAR_MIN, 1, 1));
 }
 
 #[test]
@@ -251,6 +269,8 @@ fn test_isoweekdate_to_rd() {
     assert_eq!(isoweekdate_to_rd((1981, 53, 4)), date_to_rd((1981, 12, 31)));
     assert_eq!(isoweekdate_to_rd((1981, 53, 5)), date_to_rd((1982, 1, 1)));
     assert_eq!(isoweekdate_to_rd((1981, 53, 6)), date_to_rd((1982, 1, 2)));
+    assert_eq!(isoweekdate_to_rd((YEAR_MAX, 53, 4)), date_to_rd((YEAR_MAX, 12, 31)));
+    assert_eq!(isoweekdate_to_rd((YEAR_MIN, 1, 1)), date_to_rd((YEAR_MIN, 1, 1)));
 }
 
 #[test]
@@ -281,6 +301,8 @@ fn test_date_to_isoweekdate() {
     assert_eq!(date_to_isoweekdate((1981, 12, 31)), (1981, 53, 4));
     assert_eq!(date_to_isoweekdate((1982, 1, 1)), (1981, 53, 5));
     assert_eq!(date_to_isoweekdate((1982, 1, 2)), (1981, 53, 6));
+    assert_eq!(date_to_isoweekdate((YEAR_MAX, 12, 31)), (YEAR_MAX, 53, 4));
+    assert_eq!(date_to_isoweekdate((YEAR_MIN, 1, 1)), (YEAR_MIN, 1, 1));
 }
 
 #[test]
@@ -311,6 +333,8 @@ fn test_isoweekdate_to_date() {
     assert_eq!(isoweekdate_to_date((1981, 53, 4)), (1981, 12, 31));
     assert_eq!(isoweekdate_to_date((1981, 53, 5)), (1982, 1, 1));
     assert_eq!(isoweekdate_to_date((1981, 53, 6)), (1982, 1, 2));
+    assert_eq!(isoweekdate_to_date((YEAR_MAX, 53, 4)), (YEAR_MAX, 12, 31));
+    assert_eq!(isoweekdate_to_date((YEAR_MIN, 1, 1)), (YEAR_MIN, 1, 1));
 }
 
 #[test]
@@ -330,6 +354,8 @@ fn test_isoweeks_in_year() {
     assert_eq!(isoweeks_in_year(2004), 53); // leap year, thursday
     assert_eq!(isoweeks_in_year(2015), 53); // thursday
     assert_eq!(isoweeks_in_year(2020), 53); // leap year, wednesday
+    assert_eq!(isoweeks_in_year(YEAR_MIN), 52);
+    assert_eq!(isoweeks_in_year(YEAR_MAX), 53);
 }
 
 #[test]
