@@ -958,6 +958,10 @@ pub const fn isoweekdate_to_rd((y, w, d): (i32, u8, u8)) -> i32 {
         d >= consts::WEEKDAY_MIN && d <= consts::WEEKDAY_MAX,
         "given weekday is out of range"
     );
+    debug_assert!(
+        y != YEAR_MAX || w != consts::WEEK_MAX || d <= consts::THURSDAY,
+        "given weekday is out of range (for last week of range)"
+    );
     let rd4 = date_to_rd((y, 1, 4));
     let wd4 = rd_to_weekday(rd4);
     let ys = rd4 - (wd4 - 1) as i32;
