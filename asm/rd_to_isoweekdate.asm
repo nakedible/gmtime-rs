@@ -1,4 +1,4 @@
-datealgo::asm::rd_to_isoweekdate:
+asm_rd_to_isoweekdate:
 	lea eax, [rdi + 536895152]
 	movsxd rcx, eax
 	movabs rax, 2635249153387078802

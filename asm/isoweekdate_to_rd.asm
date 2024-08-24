@@ -1,4 +1,4 @@
-datealgo::asm::isoweekdate_to_rd:
+asm_isoweekdate_to_rd:
 	mov rax, rdi
 	shr rax, 32
 	mov rcx, rdi

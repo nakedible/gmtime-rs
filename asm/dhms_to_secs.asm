@@ -1,7 +1,7 @@
-datealgo::asm::dhms_to_secs:
+asm_dhms_to_secs:
 	lea eax, [rdi + 536895152]
 	cmp eax, 1073719447
-	ja .LBB7_1
+	ja .LBB12_1
 	mov rax, rdi
 	shr rax, 48
 	movzx eax, al
@@ -19,6 +19,6 @@ datealgo::asm::dhms_to_secs:
 	imul rax, rax, 60
 	add rax, rdx
 	ret
-.LBB7_1:
+.LBB12_1:
 	xor eax, eax
 	ret

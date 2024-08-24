@@ -1,4 +1,4 @@
-datealgo::asm::secs_to_dhms:
+asm_secs_to_dhms:
 	movabs rax, 46387767571200
 	lea rcx, [rdi + rax]
 	movabs rdx, 46381619174399

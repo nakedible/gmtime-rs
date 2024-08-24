@@ -1,4 +1,4 @@
-datealgo::asm::is_leap_year:
+asm_is_leap_year:
 	imul eax, edi, -1030792151
 	add eax, 85899345
 	cmp eax, 171798691

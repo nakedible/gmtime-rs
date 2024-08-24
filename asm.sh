@@ -33,8 +33,8 @@ fi
 for fn in $funs
 do
     if [ -n "$update" ]; then
-        cargo asm --features=asmdump --simplify --lib datealgo::asm::$fn | grep '\S' > asm/$fn.asm
+        cargo asm --simplify --test=asm asm_$fn | grep '\S' > asm/$fn.asm
     else
-        cargo asm --features=asmdump --simplify --lib datealgo::asm::$fn | grep '\S' | diff -wu asm/$fn.asm -
+        cargo asm --simplify --test=asm asm_$fn | grep '\S' | diff -wu asm/$fn.asm -
     fi
 done

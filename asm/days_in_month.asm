@@ -1,6 +1,6 @@
-datealgo::asm::days_in_month:
+asm_days_in_month:
 	cmp sil, 2
-	jne .LBB11_2
+	jne .LBB16_2
 	imul eax, edi, -1030792151
 	add eax, 85899345
 	cmp eax, 171798691
@@ -11,7 +11,7 @@ datealgo::asm::days_in_month:
 	sete al
 	or al, 28
 	ret
-.LBB11_2:
+.LBB16_2:
 	mov eax, esi
 	shr al, 3
 	xor al, sil

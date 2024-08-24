@@ -1,4 +1,4 @@
-datealgo::asm::rd_to_date:
+asm_rd_to_date:
 	lea eax, [4*rdi - 2147385461]
 	imul rcx, rax, 963315389
 	shr rcx, 47

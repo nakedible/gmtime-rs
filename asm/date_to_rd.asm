@@ -1,4 +1,4 @@
-datealgo::asm::date_to_rd:
+asm_date_to_rd:
 	movabs rax, 281474976710655
 	and rax, rdi
 	mov rcx, rax

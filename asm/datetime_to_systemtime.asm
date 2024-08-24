@@ -1,4 +1,4 @@
-datealgo::asm::datetime_to_systemtime:
+asm_datetime_to_systemtime:
 	movzx eax, byte ptr [rdi + 4]
 	cmp eax, 3
 	mov ecx, dword ptr [rdi]
@@ -24,7 +24,7 @@ datealgo::asm::datetime_to_systemtime:
 	lea esi, [rcx + rax]
 	add esi, -307
 	cmp esi, 1073719447
-	ja .LBB20_1
+	ja .LBB25_1
 	add eax, ecx
 	add eax, -536895459
 	movzx ecx, byte ptr [rdi + 8]
@@ -37,14 +37,14 @@ datealgo::asm::datetime_to_systemtime:
 	add rsi, rcx
 	add rsi, rax
 	add rsi, rdi
-	jns .LBB20_2
+	jns .LBB25_2
 	test edx, edx
-	je .LBB20_10
+	je .LBB25_10
 	not rsi
 	mov eax, 1000000000
 	sub eax, edx
 	cmp edx, 1000000001
-	jb .LBB20_9
+	jb .LBB25_9
 	mov ecx, eax
 	shr ecx, 9
 	imul rcx, rcx, 281475
@@ -52,15 +52,15 @@ datealgo::asm::datetime_to_systemtime:
 	add rsi, rcx
 	imul ecx, ecx, 1000000000
 	sub eax, ecx
-.LBB20_9:
-	lea rdi, [rip + .L__unnamed_1]
+.LBB25_9:
+	lea rdi, [rip + .L__unnamed_2]
 	mov edx, eax
 	jmp qword ptr [rip + std::time::SystemTime::checked_sub@GOTPCREL]
-.LBB20_1:
+.LBB25_1:
 	xor esi, esi
-.LBB20_2:
+.LBB25_2:
 	cmp edx, 1000000000
-	jb .LBB20_4
+	jb .LBB25_4
 	mov eax, edx
 	shr eax, 9
 	imul rax, rax, 281475
@@ -68,11 +68,11 @@ datealgo::asm::datetime_to_systemtime:
 	add rsi, rax
 	imul eax, eax, 1000000000
 	sub edx, eax
-.LBB20_4:
-	lea rdi, [rip + .L__unnamed_1]
+.LBB25_4:
+	lea rdi, [rip + .L__unnamed_2]
 	jmp qword ptr [rip + std::time::SystemTime::checked_add@GOTPCREL]
-.LBB20_10:
+.LBB25_10:
 	neg rsi
-	lea rdi, [rip + .L__unnamed_1]
+	lea rdi, [rip + .L__unnamed_2]
 	xor edx, edx
 	jmp qword ptr [rip + std::time::SystemTime::checked_sub@GOTPCREL]
