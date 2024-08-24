@@ -1,4 +1,4 @@
-datealgo::asm::rd_to_weekday:
+asm_rd_to_weekday:
 	add edi, 536895152
 	movsxd rax, edi
 	movabs rcx, 2635249153387078802

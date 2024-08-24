@@ -1,4 +1,4 @@
-datealgo::asm::isoweeks_in_year:
+asm_isoweeks_in_year:
 	lea eax, [rdi + 1467999]
 	imul rcx, rax, 1374389535
 	mov rdx, rcx
@@ -12,13 +12,13 @@ datealgo::asm::isoweeks_in_year:
 	add ecx, 613566580
 	shr ecx, 29
 	cmp ecx, 3
-	je .LBB16_3
+	je .LBB21_3
 	mov al, 52
 	cmp ecx, 4
-	jne .LBB16_4
+	jne .LBB21_4
 	mov al, 53
 	ret
-.LBB16_3:
+.LBB21_3:
 	imul eax, edi, -1030792151
 	add eax, 85899345
 	cmp eax, 171798691
@@ -28,5 +28,5 @@ datealgo::asm::isoweeks_in_year:
 	test ecx, edi
 	sete al
 	or al, 52
-.LBB16_4:
+.LBB21_4:
 	ret

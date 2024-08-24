@@ -1,4 +1,4 @@
-datealgo::asm::date_to_isoweekdate:
+asm_date_to_isoweekdate:
 	movabs rax, 281474976710655
 	and rax, rdi
 	mov rcx, rax

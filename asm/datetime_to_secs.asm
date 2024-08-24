@@ -1,4 +1,4 @@
-datealgo::asm::datetime_to_secs:
+asm_datetime_to_secs:
 	mov ecx, dword ptr [rdi]
 	movzx eax, byte ptr [rdi + 4]
 	cmp eax, 3
@@ -23,7 +23,7 @@ datealgo::asm::datetime_to_secs:
 	lea edx, [rcx + rax]
 	add edx, -307
 	cmp edx, 1073719447
-	ja .LBB9_1
+	ja .LBB14_1
 	add eax, ecx
 	add eax, -536895459
 	movzx ecx, byte ptr [rdi + 8]
@@ -37,6 +37,6 @@ datealgo::asm::datetime_to_secs:
 	add rax, rsi
 	add rax, rdi
 	ret
-.LBB9_1:
+.LBB14_1:
 	xor eax, eax
 	ret

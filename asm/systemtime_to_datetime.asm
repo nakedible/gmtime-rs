@@ -1,4 +1,4 @@
-datealgo::asm::systemtime_to_datetime:
+asm_systemtime_to_datetime:
 	push r14
 	push rbx
 	sub rsp, 40
@@ -13,28 +13,28 @@ datealgo::asm::systemtime_to_datetime:
 	call qword ptr [rip + std::time::SystemTime::duration_since@GOTPCREL]
 	cmp qword ptr [rsp], 0
 	mov rax, qword ptr [rsp + 8]
-	je .LBB19_1
+	je .LBB24_1
 	mov ecx, dword ptr [rsp + 16]
 	cmp ecx, 1
 	sbb rax, -1
 	cmp rax, r14
-	ja .LBB19_4
+	ja .LBB24_4
 	mov esi, 1000000000
 	sub esi, ecx
 	test ecx, ecx
 	cmove esi, ecx
 	neg rax
-	jmp .LBB19_6
-.LBB19_1:
+	jmp .LBB24_6
+.LBB24_1:
 	movabs rcx, 46381619174399
 	cmp rax, rcx
-	jbe .LBB19_2
-.LBB19_4:
+	jbe .LBB24_2
+.LBB24_4:
 	xor eax, eax
-	jmp .LBB19_7
-.LBB19_2:
+	jmp .LBB24_7
+.LBB24_2:
 	mov esi, dword ptr [rsp + 16]
-.LBB19_6:
+.LBB24_6:
 	lea rcx, [r14 + rax]
 	add rcx, 26438400
 	movabs rdx, -4454547087429121353
@@ -90,7 +90,7 @@ datealgo::asm::systemtime_to_datetime:
 	mov byte ptr [rbx + 12], dl
 	mov dword ptr [rbx + 16], esi
 	mov eax, 1
-.LBB19_7:
+.LBB24_7:
 	mov dword ptr [rbx], eax
 	mov rax, rbx
 	add rsp, 40

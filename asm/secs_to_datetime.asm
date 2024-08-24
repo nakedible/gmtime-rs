@@ -1,4 +1,4 @@
-datealgo::asm::secs_to_datetime:
+asm_secs_to_datetime:
 	movabs rax, 46387767571200
 	lea rcx, [rsi + rax]
 	movabs rdx, 46381619174399
